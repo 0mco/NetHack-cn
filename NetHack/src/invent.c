@@ -3025,13 +3025,19 @@ boolean picked_some;
         if (obj_cnt == 1 && otmp->quan == 1L)
             There("有 %s 物品.", picked_some ? "另一个" : "一个");
         else
-            There("有 %s%s 物品.",
+            There("有%s%s物品.",
+#ifdef ANDROID
+                (obj_cnt == 2) ? "两个" : (
+#endif
                 (obj_cnt < 5)
                       ? "几个"
                       : (obj_cnt < 10)
                           ? "多个"
-                          : "很多",
-                picked_some ? "" : "");
+                          : "很多"
+#ifdef ANDROID
+                )
+#endif
+                , picked_some ? "" : "");
         for (; otmp; otmp = otmp->nexthere)
             if (otmp->otyp == CORPSE && will_feel_cockatrice(otmp, FALSE)) {
                 pline("%s %s%s.",
